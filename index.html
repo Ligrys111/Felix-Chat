@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FelixChat</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="icon" href="icon.png">
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
+    <script src="fbdb.js"></script>
+    <script src="chat.js"></script>
+
+    <script>
+        var chat;
+
+        window.onload = () => {
+            
+            let username = 'bezprzyjaciol';
+            let avatar = null;
+            
+            if (localStorage.getItem('username')) {
+                username = localStorage.getItem('username');
+                avatar = localStorage.getItem('photo')
+            } else {
+                document.location.href = './login.html'
+            }
+            chat = new Chat(username, avatar);
+            
+            chat.init();
+            const channelName = document.getElementById("channelName")
+            const acceptButton = document.getElementById("acceptChannel")
+            const channelDescription = document.getElementById("channelDescription")
+            const channelImg = document.getElementById("channelImg")
+            let channelchannel
+            acceptButton.addEventListener("click", function (e) {
+                if (channelName.value.length && channelDescription.value.length < 3) {
+                    alert("Nazwa kanału lub opis jest mniejszy od trzech")
+                }
+                else {
+
+                    chat.addChannel(channelName.value, channelDescription.value, channelImg.value)
+                    channelName.value = "";
+                    channelDescription.value = "";
+                    channelImg.value = "";
+
+                }
+            })
+            chat.getChannelsList();
+        }
+
+        const changeChannel = (channel, name) => {
+            document.getElementById('ChannelName').innerText = name;
+            chat.init(channel);
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="users">
+            <h2>Kanały</h2>
+            <ul class="channels" id="channels">
+
+
+            </ul>
+            <input id="channelName" type="text" placeholder="Nazwa Kanału">
+            <input id="channelDescription" type="text" placeholder="Opis Kanału">
+            <input type="number" id="channelImg" value="123493"
+                onchange="document.getElementById('channelPreview').src='https:\/\/img.icons8.com/?size=100&id='+this.value+'&format=png&color=ffffff'">
+
+            <img id="channelPreview">
+            <button id="acceptChannel">Dodaj</button>
+        </div>
+        <div class="chat">
+            <h2 id="ChannelName" ;>Czat</h2>
+            <div class="chat-messages" id="Chat">
+
+            </div>
+            <form action="#">
+                <input id="sendingMessage" type="text" placeholder="Wpisz wiadomość...">
+                <button type="submit" id="send">Wyślij</button>
+            </form>
+
+        </div>
+
+
+
+    </div>
+   <!--<script src="script.js"></script>--> 
+</body>
+
+</html>
