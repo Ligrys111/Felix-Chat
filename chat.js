@@ -92,7 +92,7 @@ class Chat {
         });
 
         const sendMessage = message => {
-            if (message.trim().length < 3) {
+            if (message.trim().length < 1) {
                 return;
             }
 

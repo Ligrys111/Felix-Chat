@@ -18,6 +18,62 @@ body {
     color: #fff;
     padding: 20px;
 }
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  
+  .cta {
+    position: relative;
+    margin: auto;
+    padding: 19px 22px;
+    transition: all 0.2s ease;
+  }
+  .cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 28px;
+    background: rgba(223, 111, 6, 0.5);
+    width: 56px;
+    height: 56px;
+    transition: all 0.3s ease;
+  }
+  .cta span {
+    position: relative;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .cta svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #111;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+  }
+  .cta:hover:before {
+    width: 100%;
+    background: rgb(223, 111, 6);
+    
+  }
+  .cta:hover svg {
+    transform: translateX(0);
+  }
+  .cta:active {
+    transform: scale(0.96);
+  }
  
 .users h2 {
     margin: 0 0 20px;
@@ -84,20 +140,29 @@ body {
 }
 
 .chat input[type="text"] {
-    flex: 1;
+    flex: 3;
     padding: 10px;
     border: 1px solid #ccc;
     background: transparent;
     border-radius: 10px;
 }
 
+#send{
+    margin: 0 4px;
+
+}
+#send:before{
+    background: rgba(13, 162, 231, 0.5);
+}
+#send:hover:before{
+    background: rgb(13, 162, 231);
+}
 .chat button[type="submit"] {
     padding: 10px;
     border: none;
-    background-color: #007bff;
-    color: #fff;
+    flex: 1;
     cursor: pointer;
-    border-radius: 50px;
+    
 }
 
 .users li img {
