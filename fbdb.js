@@ -52,13 +52,13 @@ class FbDb {
         this.db.ref(`${ref}`).on('value', snap => listener(snap.val()));
     }
 
-    set(ref, data) {
-        this.db.ref(`${ref}`).set(data);
+    async set(ref, data) {
+        await this.db.ref(`${ref}`).set(data);
     }
 
-    push(ref, data) {
+    async push(ref, data) {
         const r = this.db.ref(`${ref}`);
-        const item = r.push();
-        item.set(data);
+        const item = await r.push();
+        await item.set(data);
     }
 }
