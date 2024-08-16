@@ -52,6 +52,14 @@
                 }
             })
             chat.getChannelsList();
+
+            const loggedUser = {
+                username: localStorage.getItem('username'),
+                photo: localStorage.getItem('photo')
+            }
+
+            document.getElementById('UserName').textContent = loggedUser.username
+            document.getElementById('UserPhoto').src = loggedUser.photo;
         }
 
         const changeChannel = (channel, name) => {
@@ -92,9 +100,15 @@
 
         </div>
 
-        <div class="user" id="user">
-            <button id="logOut">Wyloguj się!</button>
-            
+        <div class="users" id="user">
+            <div style="text-align: center;">
+                <h2 id="UserName">Profil</h2>
+                <img id="UserPhoto" alt="user photo"/>
+                <br/>
+                <hr/>
+                <button id="logOut">Wyloguj się!</button>
+                
+            </div>
         </div>
 
 

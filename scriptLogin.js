@@ -24,6 +24,6 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
             localStorage.setItem("username", user.displayName)
             document.location.href="index.html"
         }).catch((error) => {
-            alert('Wystąpił nieoczekiwany błąd madafucka')
+            alert('Wystąpił nieoczekiwany błąd madafucka');
         });
 });

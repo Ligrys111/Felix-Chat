@@ -5,13 +5,8 @@ body {
     background: url("bG.png") 100% 100% no-repeat;
     background-size: cover ;
 }
-#user{
-    background: rgba(255, 255, 255, 0.1);
 
-}
-.user{
-    
-}
+
 .container {
     display: flex;
     height: 100vh;
