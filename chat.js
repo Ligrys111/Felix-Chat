@@ -1,6 +1,6 @@
 class ChatUser {
     constructor(username, avatar = 'https://i.pravatar.cc/300?u=' + username) {
-        
+
         this.username = username ?? 'anon';
         this.avatar = avatar;
     }
@@ -20,6 +20,9 @@ class Chat {
         this.db = new FbDb();
         this.channel = 'messages';
         this.avatar = avatar;
+        this.members = {};
+
+        this.getMembersList();
     }
 
     getMessageTemplate(message) {
@@ -46,7 +49,7 @@ class Chat {
         this.db.push(name, payload);
     }
 
-    getChannelsTemplate(channel){
+    getChannelsTemplate(channel) {
         return `
         <li onclick="changeChannel('${channel.name}', '${channel.topic}')">
                     <img src="https://img.icons8.com/?size=100&id=${channel.img}&format=png&color=ffffff"
@@ -56,9 +59,49 @@ class Chat {
         `;
     }
 
+    getMembersTemplate(member) {
+        return `
+        <li style="cursor:pointer" onclick="chat.showProfile('${member.uid}')">
+                    <img src="${member.photo}" alt="Avatar użytkownika">
+                    <span>${member.username}</span>
+                </li>
+        `;
+    }
+
+    showProfile(uid = null) {
+        let profile = {};
+
+        if(uid == null) {
+            profile = {
+                username: localStorage.getItem('username'),
+                photo: localStorage.getItem('photo')
+            }
+        } else {
+            profile = this.members[uid];
+        }
+
+        const nameEle = document.getElementById('UserName');
+        const photoEle = document.getElementById('UserPhoto');
+        const uidEle = document.getElementById('UserUid');
+        const emailEle = document.getElementById('UserEmail');
+        const logoutEle = document.getElementById('logOut');
+
+        nameEle.textContent = profile.username;
+        uidEle.textContent = profile.uid;
+        emailEle.textContent = profile.email;
+        emailEle.href = 'mailto:' + profile.email;
+        photoEle.src = profile.photo;
+
+        if(localStorage.getItem('username') == profile.username) {
+            logoutEle.style.display = 'block';
+        } else {
+            logoutEle.style.display = 'none';
+        }
+    }
+
     getChannelsList() {
 
-        this.db.addListener("channels", data=>{
+        this.db.addListener("channels", data => {
 
             const channels = document.getElementById("channels");
             const keys = Object.keys(data);
@@ -69,6 +112,18 @@ class Chat {
                 return tpl(item);
             }).join(' ');
         })
+
+    }
+
+    getMembersList() {
+        const tpl = this.getMembersTemplate;
+        const list = document.getElementById('MembersList');
+
+        this.db.addListener("members", data => {
+            const keys = Object.keys(data);
+            this.members = data;
+            list.innerHTML = keys.map(uid => tpl(this.members[uid])).join(''); 
+        });
 
     }
 

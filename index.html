@@ -51,15 +51,9 @@
 
                 }
             })
+            
             chat.getChannelsList();
-
-            const loggedUser = {
-                username: localStorage.getItem('username'),
-                photo: localStorage.getItem('photo')
-            }
-
-            document.getElementById('UserName').textContent = loggedUser.username
-            document.getElementById('UserPhoto').src = loggedUser.photo;
+            chat.showProfile();
         }
 
         const changeChannel = (channel, name) => {
@@ -76,17 +70,23 @@
     <div class="container">
         <div class="users">
             <h2>Kanały</h2>
-            <ul class="channels" id="channels">
+            <ul class="channels" id="channels"></ul>
 
+            <a onclick="document.getElementById('AddChannelForm').style.display = 'block';this.style.display = 'none'">Dodaj kanał</a>
+            <div id="AddChannelForm" style="display: none;">
+                <input id="channelName" type="text" placeholder="Nazwa Kanału">
+                <input id="channelDescription" type="text" placeholder="Opis Kanału">
+                <input type="number" id="channelImg" value="123493"
+                    onchange="document.getElementById('channelPreview').src='https:\/\/img.icons8.com/?size=100&id='+this.value+'&format=png&color=ffffff'">
 
-            </ul>
-            <input id="channelName" type="text" placeholder="Nazwa Kanału">
-            <input id="channelDescription" type="text" placeholder="Opis Kanału">
-            <input type="number" id="channelImg" value="123493"
-                onchange="document.getElementById('channelPreview').src='https:\/\/img.icons8.com/?size=100&id='+this.value+'&format=png&color=ffffff'">
-
-            <img id="channelPreview">
-            <button id="acceptChannel">Dodaj</button>
+                <img id="channelPreview">
+                <button id="acceptChannel">Dodaj</button>
+            </div>
+            <br/>
+            <hr/> 
+            <br/>
+            <h2>Użyszkodnicy</h2>
+            <ul class="members-list" id="MembersList"></ul>
         </div>
         <div class="chat">
             <h2 id="ChannelName" ;>Czat</h2>
@@ -110,6 +110,10 @@
             <div style="text-align: center;">
                 <h2 id="UserName">Profil</h2>
                 <img id="UserPhoto" alt="user photo"/>
+                <br/>
+                <small id="UserUid"></small>
+                <br/>
+                <a id="UserEmail"></a>
                 <br/>
                 <hr/>
                 <br/>
